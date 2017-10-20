@@ -1,0 +1,13 @@
+#!/bin/bash
+#echo "Sisesta kasutajanimi, kelle home folderi backupida"
+#read nimi
+#echo "Sisesta praegune kuupaev"
+#read kuup
+cat /etc/passwd | grep /home | cut -d: -f1 > kasutajad
+while IFS= read line
+do
+kuup=$(date +%F)
+nimi=$(echo "$line")
+#votab kasutaja antud info ning pakib home_bcp kausta failid
+tar czvf /home_bcp/$nimi"_"$kuup.tar.gz /home/$nimi
+done < kasutajad
